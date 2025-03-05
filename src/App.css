@@ -1,0 +1,18 @@
+/* App.css */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.pattern-dots {
+  background-image: radial-gradient(currentColor 1px, transparent 1px);
+  background-size: 1rem 1rem;
+}
