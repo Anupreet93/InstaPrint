@@ -33,8 +33,8 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
     try {
       let upiId;
       switch (upiApp) {
-        case 'PhonePe': upiId = '8485827693@ibl'; break;
-        case 'GooglePay': upiId = 'anupreetdalvi@okaxis'; break;
+        case 'PhonePe': upiId = 'merchant-paytm-id@upi'; break;
+        case 'GooglePay': upiId = 'merchant-paytm-id@upi'; break;
         case 'Paytm': upiId = 'merchant-paytm-id@upi'; break;
         default: upiId = 'default-merchant-id@upi';
       }
@@ -69,9 +69,10 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
       alert('Razorpay SDK failed to load. Are you online?');
       return;
     }
-
+    const razorpaykey = import.meta.env.VITE_RAZORPAY_KEY;
     const options = {
-      key: 'rzp_test_wf9zZFyL5TXNXw', // Replace with your Razorpay test key if needed
+      
+      key: razorpaykey, // Replace with your Razorpay test key if needed
       amount: paymentAmount * 100, // Razorpay amount is in paise
       currency: 'INR',
       name: 'InstaPrint',
