@@ -1,5 +1,5 @@
-// src/pages/Payment/PaymentPage.js
-import React, { useState } from 'react';
+// src/pages/Payment/PaymentPage.jsx
+import React, { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
 import axios from 'axios';
 import { motion } from 'framer-motion';
@@ -10,33 +10,31 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
   const [qrCodeUrl, setQrCodeUrl] = useState('');
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
 
+  // Dynamically load Razorpay script if not already present
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  // Modified handler: when a payment app icon is clicked, set the app name and trigger Razorpay payment
   const handlePaymentAppClick = (appName) => {
     setUpiApp(appName);
-    let upiId;
-    switch (appName) {
-      case 'PhonePe': 
-        upiId = 'merchant-phonepe-id@upi'; 
-        break;
-      case 'GooglePay': 
-        upiId = 'merchant-googlepay-id@upi'; 
-        break;
-      case 'Paytm': 
-        upiId = 'merchant-paytm-id@upi'; 
-        break;
-      default: 
-        upiId = 'default-merchant-id@upi';
-    }
-    // Create UPI URI and redirect (on mobile, this will launch the app if installed)
-    const upiUri = `upi://pay?pa=${upiId}&pn=InstaPrint&am=${paymentAmount}&cu=INR`;
-    window.location.href = upiUri;
+    // For testing purposes, regardless of the icon, trigger Razorpay payment gateway
+    handleRazorpayPayment();
   };
 
   const generateQRCode = async (amount) => {
     try {
       let upiId;
       switch (upiApp) {
-        case 'PhonePe': upiId = 'merchant-paytm-id@upi'; break;
-        case 'GooglePay': upiId = 'merchant-paytm-id@upi'; break;
+        case 'PhonePe': upiId = '8485827693@ibl'; break;
+        case 'GooglePay': upiId = 'anupreetdalvi@okaxis'; break;
         case 'Paytm': upiId = 'merchant-paytm-id@upi'; break;
         default: upiId = 'default-merchant-id@upi';
       }
@@ -65,20 +63,23 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
     }
   };
 
-  // Razorpay payment handler using a test key (secret should only be used on server-side)
+  // Razorpay payment handler using a test key (the secret should only be used server-side)
   const handleRazorpayPayment = () => {
+    if (!window.Razorpay) {
+      alert('Razorpay SDK failed to load. Are you online?');
+      return;
+    }
+
     const options = {
-      key: 'Razorpay test key', // Replace with your Razorpay test key
+      key: 'rzp_test_wf9zZFyL5TXNXw', // Replace with your Razorpay test key if needed
       amount: paymentAmount * 100, // Razorpay amount is in paise
       currency: 'INR',
       name: 'InstaPrint',
       description: 'Test Payment',
-      // The handler receives the payment response from Razorpay
       handler: function (response) {
-        // For test integration, assume payment is successful
+        // For testing, assume payment is successful
         alert('Payment successful!');
         setIsPaymentLoading(true);
-        // You can call onPaymentConfirmed here after any additional logic if needed
         onPaymentConfirmed();
       },
       prefill: {
@@ -109,7 +110,7 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
       {/* UPI Payment Method */}
       {paymentMethod === 'UPI' && (
         <>
-          <h3 className="text-lg font-bold mb-4">Select UPI App</h3>
+          <h3 className="text-lg font-bold mb-4">Select Payment App</h3>
           <div className="flex justify-center space-x-6 mb-6">
             {[
               { name: 'PhonePe', img: "https://th.bing.com/th/id/OIP.tuYalZe2SOHuvjtZkDDJ5gHaFf?w=290&h=215&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2", ring: 'ring-blue-600' },
@@ -126,6 +127,7 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
               </div>
             ))}
           </div>
+          {/* Retaining QR Code and UPI verification buttons if needed */}
           {qrCodeUrl ? (
             <>
               <img src={qrCodeUrl} alt="QR Code" className="mx-auto w-56 h-56 mb-6" />
