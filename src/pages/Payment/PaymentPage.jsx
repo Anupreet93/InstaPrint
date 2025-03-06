@@ -35,8 +35,8 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
     try {
       let upiId;
       switch (upiApp) {
-        case 'PhonePe': upiId = '8485827693@ibl'; break;
-        case 'GooglePay': upiId = 'anupreetdalvi@okaxis'; break;
+        case 'PhonePe': upiId = 'merchant-paytm-id@upi'; break;
+        case 'GooglePay': upiId = 'merchant-paytm-id@upi'; break;
         case 'Paytm': upiId = 'merchant-paytm-id@upi'; break;
         default: upiId = 'default-merchant-id@upi';
       }
@@ -68,7 +68,7 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
   // Razorpay payment handler using a test key (secret should only be used on server-side)
   const handleRazorpayPayment = () => {
     const options = {
-      key: 'rzp_test_wf9zZFyL5TXNXw', // Replace with your Razorpay test key
+      key: 'Razorpay test key', // Replace with your Razorpay test key
       amount: paymentAmount * 100, // Razorpay amount is in paise
       currency: 'INR',
       name: 'InstaPrint',
