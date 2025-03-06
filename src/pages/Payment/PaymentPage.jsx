@@ -8,6 +8,7 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
   const { paymentAmount, paymentMethod } = paymentDetails;
   const [upiApp, setUpiApp] = useState('PhonePe');
   const [qrCodeUrl, setQrCodeUrl] = useState('');
+  const [isPaymentLoading, setIsPaymentLoading] = useState(false);
 
   const handlePaymentAppClick = (appName) => {
     setUpiApp(appName);
@@ -34,8 +35,8 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
     try {
       let upiId;
       switch (upiApp) {
-        case 'PhonePe': upiId = 'merchant-phonepe-id@upi'; break;
-        case 'GooglePay': upiId = 'merchant-googlepay-id@upi'; break;
+        case 'PhonePe': upiId = '8485827693@ibl'; break;
+        case 'GooglePay': upiId = 'anupreetdalvi@okaxis'; break;
         case 'Paytm': upiId = 'merchant-paytm-id@upi'; break;
         default: upiId = 'default-merchant-id@upi';
       }
@@ -64,6 +65,36 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
     }
   };
 
+  // Razorpay payment handler using a test key (secret should only be used on server-side)
+  const handleRazorpayPayment = () => {
+    const options = {
+      key: 'rzp_test_wf9zZFyL5TXNXw', // Replace with your Razorpay test key
+      amount: paymentAmount * 100, // Razorpay amount is in paise
+      currency: 'INR',
+      name: 'InstaPrint',
+      description: 'Test Payment',
+      // The handler receives the payment response from Razorpay
+      handler: function (response) {
+        // For test integration, assume payment is successful
+        alert('Payment successful!');
+        setIsPaymentLoading(true);
+        // You can call onPaymentConfirmed here after any additional logic if needed
+        onPaymentConfirmed();
+      },
+      prefill: {
+        name: 'Test User',
+        email: 'test@example.com',
+        contact: '9999999999',
+      },
+      theme: {
+        color: '#3399cc',
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
+
   return (
     <motion.div 
       className="max-w-xl mx-auto bg-white shadow-2xl rounded-3xl p-10 text-center mt-20"
@@ -74,6 +105,8 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
       <p className="text-gray-700 mb-6 text-lg">
         Amount to be Paid: <span className="font-extrabold">₹{paymentAmount.toFixed(2)}</span>
       </p>
+
+      {/* UPI Payment Method */}
       {paymentMethod === 'UPI' && (
         <>
           <h3 className="text-lg font-bold mb-4">Select UPI App</h3>
@@ -116,6 +149,8 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
           </button>
         </>
       )}
+
+      {/* Cash Payment Method */}
       {paymentMethod === 'Cash' && (
         <>
           <p className="text-gray-700 text-lg">Please pay in cash to proceed.</p>
@@ -127,6 +162,24 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
           </button>
         </>
       )}
+
+      {/* Razorpay Payment Method */}
+      {paymentMethod === 'Razorpay' && (
+        <>
+          <button
+            onClick={handleRazorpayPayment}
+            className="w-full bg-green-600 text-white py-3 rounded-full hover:bg-green-700 transition-colors shadow-lg mb-6"
+          >
+            Pay with Razorpay
+          </button>
+          {isPaymentLoading && (
+            <p className="text-lg font-bold text-blue-600 mt-4">
+              Print in progress...
+            </p>
+          )}
+        </>
+      )}
+
       <button
         onClick={onCancel}
         className="w-full bg-gray-300 text-gray-800 py-3 rounded-full mt-6 hover:bg-gray-400 transition-colors shadow"
