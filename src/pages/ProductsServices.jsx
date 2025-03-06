@@ -5,11 +5,14 @@ import { motion } from 'framer-motion';
 const ProductsServices = () => (
   <section className="py-24 bg-gradient-to-b from-white to-blue-50">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 className="text-4xl font-bold text-center mb-16 text-gray-900">
-        Our <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Services</span>
+      <h2 className="text-4xl font-bold text-center mb-4 text-gray-900">
+        Our <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Products & Services</span>
       </h2>
+      <p className="text-center text-gray-700 mb-12">
+        Explore our diverse range of high-quality products and services, from AI-powered document printing to innovative 3D printing and impactful large format printing solutions.
+      </p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {[
           {
             title: "Smart Document Printing",
@@ -28,12 +31,6 @@ const ProductsServices = () => (
             desc: "Posters, banners, and signage up to A0 size",
             icon: "📐",
             color: "from-green-500 to-teal-400"
-          },
-          {
-            title: "Cloud Storage",
-            desc: "Secure document storage with instant access",
-            icon: "☁️",
-            color: "from-orange-500 to-yellow-400"
           }
         ].map((service, index) => (
           <motion.div
