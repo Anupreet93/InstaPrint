@@ -1,8 +1,6 @@
 // src/components/Footer.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faInstagram, faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 const Footer = () => (
   <footer className="bg-gray-900 text-gray-300 py-16">
@@ -11,20 +9,6 @@ const Footer = () => (
         <div className="space-y-4">
           <h5 className="text-white font-bold text-lg">InstaPrint</h5>
           <p className="text-sm">Redefining digital printing through innovation</p>
-          <div className="flex space-x-4">
-            <a href="#" className="text-gray-400 hover:text-white">
-              <FontAwesomeIcon icon={faFacebook} />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-white">
-              <FontAwesomeIcon icon={faInstagram} />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-white">
-              <FontAwesomeIcon icon={faWhatsapp} />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-white">
-              <FontAwesomeIcon icon={faGoogle} />
-            </a>
-          </div>
         </div>
 
         <div>
@@ -32,22 +16,7 @@ const Footer = () => (
           <ul className="space-y-2 text-sm">
             <li>
               <Link to="/products" className="hover:text-white">
-                Document Printing
-              </Link>
-            </li>
-            <li>
-              <Link to="/products" className="hover:text-white">
-                3D Printing
-              </Link>
-            </li>
-            <li>
-              <Link to="/products" className="hover:text-white">
-                Bulk Orders
-              </Link>
-            </li>
-            <li>
-              <Link to="/products" className="hover:text-white">
-                Design Services
+                Products
               </Link>
             </li>
           </ul>
