@@ -89,7 +89,7 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
     const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY; // Ensure your .env file has VITE_RAZORPAY_KEY
 
     const options = {
-      key: razorpayKey,
+      key: 'rzp_test_wf9zZFyL5TXNXw',
       amount: paymentAmount * 100, // Amount in paise
       currency: 'INR',
       name: 'InstaPrint',
