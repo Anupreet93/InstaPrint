@@ -91,6 +91,9 @@ const AboutUs = () => {
                   <p className="text-lg text-gray-700">
                     <span className="font-bold">Name:</span> Anupreet Shrikrishna
                     Dalvi
+                  </p> 
+                    <p className="text-lg text-gray-700">
+                    <span className="font-bold">Name:</span> Atharva Thadve
                   </p>
                   <p className="text-lg text-gray-700">
                     <span className="font-bold">Mobile:</span> +91-848582XXXX
