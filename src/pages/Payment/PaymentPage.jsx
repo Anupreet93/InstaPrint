@@ -86,17 +86,11 @@ const PaymentPage = ({ paymentDetails, onPaymentConfirmed, onCancel }) => {
       alert('Razorpay SDK failed to load. Are you online?');
       return;
     }
-<<<<<<< HEAD
-    const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY; // Ensure your .env file has VITE_RAZORPAY_KEY
+const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID; // Ensure your .env file has VITE_RAZORPAY_KEY_ID
 
-    const options = {
-      key: 'rzp_live_FyARSX63A3odes',
-=======
-    const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID; // Ensure your .env file has VITE_RAZORPAY_KEY
+const options = {
+  key: razorpayKey,
 
-    const options = {
-      key: razorpayKey,
->>>>>>> cac7112 (Updated project files, ignored .env)
       amount: paymentAmount * 100, // Amount in paise
       currency: 'INR',
       name: 'InstaPrint',
