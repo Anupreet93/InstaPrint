@@ -1,8 +1,6 @@
 // src/pages/Editor/FileUploadEditor.js
 import React, { useState } from 'react';
-import QRCode from 'qrcode';
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/legacy/build/pdf';
-import { motion } from 'framer-motion';
 import PageSelector from './PageSelector';
 import PreviewModal from './PreviewModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
